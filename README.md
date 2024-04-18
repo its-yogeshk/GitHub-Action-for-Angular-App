@@ -1,4 +1,8 @@
-# DockerizingAngularAppUsingHTTPD
+# GitHub-Action-for-Angular-App
+
+`Github-Actions-for-angular-project` is a repository dedicated to showcasing the integration of GitHub Actions into an Angular project. This repository provides a comprehensive setup for automating various workflows and tasks related to Angular project deployment using GitHub Actions.
+
+# Project Overview
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
 
