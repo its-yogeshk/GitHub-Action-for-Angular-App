@@ -34,5 +34,5 @@ jobs:
       
       - name: deploy static site to aws_s3
         run: |
-          aws s3 --region "ap-south-1" sync dist\dockerizing-angular-app-using-httpd\browser s3://angular-demo-to --expires "2034-01-01T00:00:00Z" --cache-control "max-age=2592000,public" --delete
+          aws s3 --region "ap-south-1" sync dist/dockerizing-angular-app-using-httpd/browser s3://angular-demo-to --expires "2034-01-01T00:00:00Z" --cache-control "max-age=2592000,public" --delete
           aws cloudfront create-invalidation --distribution-id E1ULRM0IXHVO9U --paths "/*"
