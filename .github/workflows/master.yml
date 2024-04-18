@@ -1,0 +1,38 @@
+name: Deploy on s3 and cdn
+on:
+ push:
+   branches:
+     - master
+ workflow_dispatch:
+   
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup-node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+      - name: script
+        run: |
+          sudo apt-get update
+          sudo apt-get install python2-dev
+          sudo apt-get install python3-pip
+          pip install awscliv2
+          npm i -g @angular/cli
+          npm install --legacy-peer-deps
+      - name: building
+        run: ng build
+      
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         aws-region: ap-south-1
+      
+      - name: deploy static site to aws_s3
+        run: |
+          aws s3 --region "ap-south-1" sync dist\dockerizing-angular-app-using-httpd\browser s3://angular-demo-to --expires "2034-01-01T00:00:00Z" --cache-control "max-age=2592000,public" --delete
+          aws cloudfront create-invalidation --distribution-id E1ULRM0IXHVO9U --paths "/*"
